@@ -1,10 +1,10 @@
-package ru.timelimit.healthtracking.ui.dashboard
+package ru.timelimit.healthtracking.ui.calendar
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class CalendarViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
