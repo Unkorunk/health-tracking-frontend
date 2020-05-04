@@ -3,9 +3,14 @@ package ru.timelimit.healthtracking
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.navigation.ui.AppBarConfiguration
 import ru.timelimit.healthtracking.ui.calendar.CalendarFragment
+import ru.timelimit.healthtracking.ui.contacts.ContactsFragment
 import ru.timelimit.healthtracking.ui.health.HealthFragment
 import ru.timelimit.healthtracking.ui.home.HomeFragment
 import ru.timelimit.healthtracking.ui.recommendation.RecommendationFragment
@@ -23,7 +28,10 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_contacts -> {
-                //TODO: contacts fragment
+                val contactsFragment = ContactsFragment()
+                title = getString(R.string.title_contacts)
+                openFragment(contactsFragment)
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_diary -> {
@@ -47,11 +55,15 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
+    lateinit var navView : BottomNavigationView
+    private lateinit var container : ConstraintLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
 
+        container = findViewById(R.id.container)
         //val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -68,8 +80,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
+        transaction.replace(R.id.current_frame, fragment)
+
+        val cnt = supportFragmentManager.backStackEntryCount
+
+        //transaction.addToBackStack(null)
+
         transaction.commit()
+    }
+
+    override fun onBackPressed() {
+        val selectedItem = navView.selectedItemId
+
+        if (R.id.navigation_health != selectedItem) {
+            navView.selectedItemId = R.id.navigation_health
+        } else {
+            super.onBackPressed()
+        }
     }
 }
