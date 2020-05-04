@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import ru.timelimit.healthtracking.ui.calendar.CalendarFragment
+import ru.timelimit.healthtracking.ui.contacts.ContactsFragment
 import ru.timelimit.healthtracking.ui.health.HealthFragment
 import ru.timelimit.healthtracking.ui.home.HomeFragment
 
@@ -22,7 +23,10 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_contacts -> {
-                //TODO: contacts fragment
+                val contactsFragment = ContactsFragment()
+                title = getString(R.string.title_contacts)
+                openFragment(contactsFragment)
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_diary -> {
