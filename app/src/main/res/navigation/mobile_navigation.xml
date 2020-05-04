@@ -3,41 +3,39 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/mobile_navigation"
-            app:startDestination="@+id/navigation_home">
+            app:startDestination="@+id/nav_greetings">
 
     <fragment
-            android:id="@+id/navigation_home"
-            android:name="ru.timelimit.healthtracking.ui.home.HomeFragment"
-            android:label="@string/title_health"
-            tools:layout="@layout/fragment_home">
+            android:id="@+id/nav_greetings"
+            android:name="ru.timelimit.healthtracking.ui.auth.GreetingFragment"
+            android:label="@string/greeting"
+            tools:layout="@layout/fragment_greeting">
 
         <action
-                android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-                app:destination="@id/navigation_home_second"/>
-    </fragment>
-    <fragment
-            android:id="@+id/navigation_home_second"
-            android:name="ru.timelimit.healthtracking.ui.home.HomeSecondFragment"
-            android:label="@string/home_second"
-            tools:layout="@layout/fragment_home_second">
+                android:id="@+id/action_to_auth"
+                app:destination="@id/nav_auth"/>
         <action
-                android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-                app:destination="@id/navigation_home"/>
-
-        <argument
-                android:name="myArg"
-                app:argType="string"/>
+                android:id="@+id/action_to_reg"
+                app:destination="@id/nav_registration"/>
+    </fragment>
+    <fragment
+            android:id="@+id/nav_auth"
+            android:name="ru.timelimit.healthtracking.ui.auth.AuthFragment"
+            android:label="@string/auth"
+            tools:layout="@layout/fragment_auth">
+        <action
+                android:id="@+id/back_to_greetings"
+                app:destination="@id/nav_greetings"/>
     </fragment>
 
     <fragment
-            android:id="@+id/navigation_dashboard"
-            android:name="ru.timelimit.healthtracking.ui.calendar.CalendarFragment"
-            android:label="@string/title_calendar"
-            tools:layout="@layout/fragment_calendar"/>
+            android:id="@+id/nav_registration"
+            android:name="ru.timelimit.healthtracking.ui.auth.RegistrationFragment"
+            android:label="@string/registration"
+            tools:layout="@layout/fragment_registration">
+        <action
+                android:id="@+id/back_to_greetings"
+                app:destination="@id/nav_greetings"/>
+    </fragment>
 
-    <fragment
-            android:id="@+id/navigation_notifications"
-            android:name="ru.timelimit.healthtracking.ui.notifications.NotificationsFragment"
-            android:label="@string/title_recommendations"
-            tools:layout="@layout/fragment_notifications"/>
 </navigation>
