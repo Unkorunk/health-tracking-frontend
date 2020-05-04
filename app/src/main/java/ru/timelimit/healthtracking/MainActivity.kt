@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import ru.timelimit.healthtracking.ui.calendar.CalendarFragment
 import ru.timelimit.healthtracking.ui.health.HealthFragment
-import ru.timelimit.healthtracking.ui.home.HomeFragment
 
 
 class MainActivity : AppCompatActivity() {
