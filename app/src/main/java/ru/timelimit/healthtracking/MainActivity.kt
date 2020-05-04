@@ -1,20 +1,29 @@
 package ru.timelimit.healthtracking
 
 import android.os.Bundle
+import android.view.View
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.timelimit.healthtracking.ui.auth.GreetingFragment
 import ru.timelimit.healthtracking.ui.calendar.CalendarFragment
 import ru.timelimit.healthtracking.ui.contacts.ContactsFragment
 import ru.timelimit.healthtracking.ui.health.HealthFragment
+import ru.timelimit.healthtracking.ui.home.HomeFragment
+import ru.timelimit.healthtracking.ui.recommendation.RecommendationFragment
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var navView : BottomNavigationView
+    private lateinit var authNavigation : View
 
     private val onNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -44,41 +53,45 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_recommendations -> {
-                //TODO: recommendations fragment
+                val recommendationFragment = RecommendationFragment()
+                title = getString(R.string.title_recommendations)
+                openFragment(recommendationFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    lateinit var navView : BottomNavigationView
+
     private lateinit var container : ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        inst = this
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
 
         container = findViewById(R.id.container)
+        navView.visibility = View.INVISIBLE
         //val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+//        val appBarConfiguration = AppBarConfiguration(setOf(
+//                R.id.nav_greetings, R.id.navigation_dashboard, R.id.navigation_notifications))
         //setupActionBarWithNavController(navController, appBarConfiguration)
         //navView.setupWithNavController(navController)
         navView.setOnNavigationItemSelectedListener(onNavItemSelectedListener)
 
-        val defaultFragment = HealthFragment()
-        title = getString(R.string.title_health)
-        openFragment(defaultFragment)
+        authNavigation = findViewById(R.id.nav_host_fragment)
+//        val defaultFragment = GreetingFragment()
+//        title = getString(R.string.greeting)
+//        openFragment(defaultFragment)
     }
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.current_frame, fragment)
-
-        val cnt = supportFragmentManager.backStackEntryCount
 
         //transaction.addToBackStack(null)
 
@@ -92,6 +105,19 @@ class MainActivity : AppCompatActivity() {
             navView.selectedItemId = R.id.navigation_health
         } else {
             super.onBackPressed()
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        private lateinit var inst : MainActivity
+
+        fun Auth() {
+            inst.navView.visibility = View.VISIBLE
+            inst.authNavigation.visibility = View.GONE
+
+            inst.title = inst.getString(R.string.title_health)
+            inst.openFragment(HealthFragment())
         }
     }
 }
