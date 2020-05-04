@@ -6,6 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+<!--        <item name="android:calendarViewStyle">@style/Widget.Calendar.Custom</item>-->
+    </style>
+
+    <style name="Widget.Calendar.Custom" parent="android:Widget.CalendarView">
+        <item name="android:focusedMonthDateColor">@color/colorLine</item>
+        <item name="android:weekNumberColor">@color/colorPrimary</item>
+        <item name="android:weekDayTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:dateTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
 
 </resources>
