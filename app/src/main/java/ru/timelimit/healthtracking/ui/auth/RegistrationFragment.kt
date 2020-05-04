@@ -5,7 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.navigation.fragment.NavHostFragment
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.google.android.material.textfield.TextInputEditText
+import org.json.JSONObject
+import ru.timelimit.healthtracking.GlobalStorage
 import ru.timelimit.healthtracking.MainActivity
 import ru.timelimit.healthtracking.R
 
@@ -32,8 +39,18 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<View>(R.id.reg_reg_btn).setOnClickListener {
-            MainActivity.Auth()
+            tryReg()
         }
+    }
+
+    private fun tryReg() {
+        val login = view!!.findViewById<TextInputEditText>(R.id.reg_login_field).text
+        val password = view!!.findViewById<TextInputEditText>(R.id.reg_password_field).text
+        val firstName = view!!.findViewById<TextInputEditText>(R.id.reg_firstName_field).text
+        val secondName = view!!.findViewById<TextInputEditText>(R.id.reg_secondName_field).text
+        val isMedic = view!!.findViewById<CheckBox>(R.id.reg_isMedic).isChecked
+
+        GlobalStorage.Reg(login.toString(), password.toString(), firstName.toString(), secondName.toString(), isMedic)
     }
 
     companion object {

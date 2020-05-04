@@ -74,6 +74,7 @@
                     android:textSize="20sp"
                     android:text="Вы врач?"/>
             <CheckBox
+                    android:id="@+id/reg_isMedic"
                     android:layout_width="60dp"
                     android:layout_height="60dp"/>
 

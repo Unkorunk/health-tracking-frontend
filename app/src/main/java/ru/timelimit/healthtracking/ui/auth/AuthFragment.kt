@@ -56,26 +56,7 @@ class AuthFragment : Fragment() {
         val login = view!!.findViewById<TextInputEditText>(R.id.auth_login_field).text
         val password = view!!.findViewById<TextInputEditText>(R.id.auth_password_field).text
 
-        val url = GlobalStorage.serverAddress + "account/login?login=$login&password=$password"
-        val request = StringRequest(Request.Method.GET, url, Response.Listener {
-            val jsonObject = JSONObject(it)
-            if (jsonObject["status"] is Boolean && jsonObject["token"] is String && jsonObject["expires_in"] is String) {
-                val status = jsonObject["status"] as Boolean
-                val token = jsonObject["token"] as String
-                val expiresIn = jsonObject["expires_in"] as String
-                if (status) {
-                    GlobalStorage.token = token
-                    GlobalStorage.expiresIn = expiresIn
-                    MainActivity.Auth()
-                } else {
-                    //TODO: error
-                }
-            }
-        }, Response.ErrorListener {
-            // TODO: error
-        })
-
-        GlobalStorage.requestQueue!!.add(request)
+        GlobalStorage.Auth(login.toString(), password.toString())
     }
 
     companion object {
