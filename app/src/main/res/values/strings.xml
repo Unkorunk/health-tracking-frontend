@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Health Tracking</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Следующая</string>
+    <string name="previous">Предыдущая</string>
     <string name="hello_home_second">Hello HomeSecondFragment. Arg: %1$s</string>
     <string name="hello_dashboard_second">Hello HomeSecondFragment. Arg: %1$s</string>
     <string name="hello_notifications_second">Hello HomeSecondFragment. Arg: %1$s</string>
 
-    <string name="title_health">Health</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_diary">Diary</string>
-    <string name="title_recommendations">Recommendations</string>
-    <string name="title_contacts">Contacts</string>
-
+    <string name="title_health">Здоровье</string>
+    <string name="title_calendar">Календарь</string>
+    <string name="title_diary">Дневник</string>
+    <string name="title_recommendations">Рекомендации</string>
+    <string name="title_contacts">Контакты</string>
+    <string name="post_description">Картинка болезни</string>>
     <string name="home_second">Home Second</string>
 </resources>

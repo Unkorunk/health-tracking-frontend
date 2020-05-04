@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import ru.timelimit.healthtracking.ui.calendar.CalendarFragment
 import ru.timelimit.healthtracking.ui.health.HealthFragment
 import ru.timelimit.healthtracking.ui.home.HomeFragment
+import ru.timelimit.healthtracking.ui.recommendation.RecommendationFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,7 +38,9 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_recommendations -> {
-                //TODO: recommendations fragment
+                val recommendationFragment = RecommendationFragment()
+                title = getString(R.string.title_recommendations)
+                openFragment(recommendationFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
