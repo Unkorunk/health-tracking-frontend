@@ -15,13 +15,14 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
+import ru.timelimit.healthtracking.GlobalStorage
 import ru.timelimit.healthtracking.GlobalStorage.Companion.token
 import ru.timelimit.healthtracking.R
 
 class RecommendationFragment : Fragment() {
     private val recommendationCards : MutableList<RecommendationCard> = arrayListOf()
     private lateinit var recommendationViewModel: RecommendationViewModel
-    private var requestQueue : RequestQueue? = null
+    //private var requestQueue : RequestQueue? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,9 +33,9 @@ class RecommendationFragment : Fragment() {
             ViewModelProviders.of(this).get(RecommendationViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_recommendation, container, false)
 
-        requestQueue = Volley.newRequestQueue(this.context)
+        //requestQueue = Volley.newRequestQueue(this.context)
 
-        val url = "http://104.248.59.99:8080/feed/get?token=$token"
+        val url = GlobalStorage.serverAddress + "feed/get?token=$token"
         val request = StringRequest(Request.Method.GET, url, Response.Listener {
             val jsonObject = JSONObject(it)
             if (jsonObject["status"] is Boolean && jsonObject["posts"] is JSONArray) {
@@ -63,7 +64,7 @@ class RecommendationFragment : Fragment() {
             // TODO: error
         })
 
-        requestQueue!!.add(request)
+        GlobalStorage.requestQueue!!.add(request)
 
         return root
     }

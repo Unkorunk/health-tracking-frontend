@@ -5,9 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.google.android.material.textfield.TextInputEditText
+import org.json.JSONArray
+import org.json.JSONObject
+import ru.timelimit.healthtracking.GlobalStorage
 import ru.timelimit.healthtracking.MainActivity
 import ru.timelimit.healthtracking.R
+import ru.timelimit.healthtracking.ui.recommendation.DataAdapter
+import ru.timelimit.healthtracking.ui.recommendation.RecommendationCard
 
 
 /**
@@ -37,9 +48,34 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<View>(R.id.auth_login_btn).setOnClickListener {
-            MainActivity.Auth()
-
+            tryAuth()
         }
+    }
+
+    private fun tryAuth() {
+        val login = view!!.findViewById<TextInputEditText>(R.id.auth_login_field).text
+        val password = view!!.findViewById<TextInputEditText>(R.id.auth_password_field).text
+
+        val url = GlobalStorage.serverAddress + "account/login?login=$login&password=$password"
+        val request = StringRequest(Request.Method.GET, url, Response.Listener {
+            val jsonObject = JSONObject(it)
+            if (jsonObject["status"] is Boolean && jsonObject["token"] is String && jsonObject["expires_in"] is String) {
+                val status = jsonObject["status"] as Boolean
+                val token = jsonObject["token"] as String
+                val expiresIn = jsonObject["expires_in"] as String
+                if (status) {
+                    GlobalStorage.token = token
+                    GlobalStorage.expiresIn = expiresIn
+                    MainActivity.Auth()
+                } else {
+                    //TODO: error
+                }
+            }
+        }, Response.ErrorListener {
+            // TODO: error
+        })
+
+        GlobalStorage.requestQueue!!.add(request)
     }
 
     companion object {

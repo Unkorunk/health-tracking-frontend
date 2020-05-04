@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.android.volley.toolbox.Volley
 import ru.timelimit.healthtracking.ui.auth.GreetingFragment
 import ru.timelimit.healthtracking.ui.calendar.CalendarFragment
 import ru.timelimit.healthtracking.ui.contacts.ContactsFragment
@@ -67,6 +68,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inst = this
+
+        GlobalStorage.requestQueue = Volley.newRequestQueue(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
